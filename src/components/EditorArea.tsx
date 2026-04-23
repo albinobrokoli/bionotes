@@ -382,6 +382,7 @@ function BlockNoteForPage({
   const lastSafeDocumentRef = useRef<PartialBlock<any, any, any>[]>(initial);
   const reconcilingRef = useRef(false);
   const backlinkTargetsRef = useRef<Set<string>>(new Set());
+  const backlinkSyncTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     setSaveStatus({ state: 'saved', lastSavedAt: null });
@@ -418,6 +419,14 @@ function BlockNoteForPage({
     window.addEventListener(BIONOTES_INSERT_QUOTE, onInsertQuote);
     return () => window.removeEventListener(BIONOTES_INSERT_QUOTE, onInsertQuote);
   }, [editor, pageId]);
+
+  useEffect(() => {
+    return () => {
+      if (backlinkSyncTimerRef.current) {
+        window.clearTimeout(backlinkSyncTimerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const onEditorNav = (ev: Event) => {
@@ -522,15 +531,20 @@ function BlockNoteForPage({
           const deduped = Array.from(
             new Map(links.map((link) => [`${link.targetPageId}::${link.blockId}`, link] as const)).values(),
           );
-          void repo.syncBacklinksForSourcePage(pageId, deduped).then(() => {
-            const targets = new Set(deduped.map((item) => item.targetPageId));
-            const prevTargets = backlinkTargetsRef.current;
-            backlinkTargetsRef.current = targets;
-            const notify = new Set<string>([...targets, ...prevTargets, pageId]);
-            for (const targetId of notify) {
-              dispatchBacklinksUpdated({ pageId: targetId });
-            }
-          });
+          if (backlinkSyncTimerRef.current) {
+            window.clearTimeout(backlinkSyncTimerRef.current);
+          }
+          backlinkSyncTimerRef.current = window.setTimeout(() => {
+            void repo.syncBacklinksForSourcePage(pageId, deduped).then(() => {
+              const targets = new Set(deduped.map((item) => item.targetPageId));
+              const prevTargets = backlinkTargetsRef.current;
+              backlinkTargetsRef.current = targets;
+              const notify = new Set<string>([...targets, ...prevTargets, pageId]);
+              for (const targetId of notify) {
+                dispatchBacklinksUpdated({ pageId: targetId });
+              }
+            });
+          }, 350);
           setSaveStatus({ state: 'saving' });
           schedule(sanitized);
         }}
@@ -579,11 +593,22 @@ function BlockNoteForPage({
 
 function EmptyEditor() {
   const { t } = useTranslation();
+  const createPage = useApp((s) => s.createPage);
+  const activeCategoryId = useApp((s) => s.activeCategoryId);
   return (
     <section className="editor-area">
       <div className="editor-empty">
         <h2>{t('editor.emptyState.title')}</h2>
         <p>{t('editor.emptyState.body')}</p>
+        <button
+          type="button"
+          className="editor-empty__create"
+          onClick={() => {
+            void createPage(activeCategoryId ?? undefined, t('editor.untitled'));
+          }}
+        >
+          Yeni sayfa olustur
+        </button>
       </div>
     </section>
   );

@@ -29,8 +29,23 @@ export type BreadcrumbProps = {
 
 export function Breadcrumb({ pdfUiTab = 'pdf', onPdfUiTab, splitSideBySide = false }: BreadcrumbProps) {
   const { t } = useTranslation();
-  const { viewMode, setViewMode, toggleRightRail, saveStatus, lastSavedAt, attachPagePdf } = useApp();
+  const {
+    viewMode,
+    setViewMode,
+    toggleRightRail,
+    saveStatus,
+    lastSavedAt,
+    attachPagePdf,
+    goBack,
+    goForward,
+    navBack,
+    navForward,
+    selectSpace,
+    selectCategory,
+    selectPage,
+  } = useApp();
   const [pdfBusy, setPdfBusy] = useState(false);
+  const [pdfFeedback, setPdfFeedback] = useState<string | null>(null);
   const page = useActivePage();
   const category = useActiveCategory();
   const space = useActiveSpace();
@@ -57,17 +72,25 @@ export function Breadcrumb({ pdfUiTab = 'pdf', onPdfUiTab, splitSideBySide = fal
   const handleAddPdf = async () => {
     if (!page || pdfBusy) return;
     setPdfBusy(true);
+    setPdfFeedback('PDF hazırlanıyor…');
     try {
       const src = await invoke<string | null>('pick_pdf');
-      if (!src) return;
+      if (!src) {
+        setPdfFeedback(null);
+        return;
+      }
+      setPdfFeedback('PDF kopyalanıyor…');
       const dest = await invoke<string>('copy_to_appdata', { src });
       const base = src.replace(/[/\\]/g, '/').split('/').pop() ?? 'document.pdf';
       await attachPagePdf(page.id, dest, base);
+      setPdfFeedback('PDF eklendi.');
       onPdfUiTab?.('pdf');
     } catch (e) {
       console.error(e);
+      setPdfFeedback('PDF eklenemedi. Lütfen tekrar deneyin.');
     } finally {
       setPdfBusy(false);
+      window.setTimeout(() => setPdfFeedback(null), 2500);
     }
   };
 
@@ -77,7 +100,8 @@ export function Breadcrumb({ pdfUiTab = 'pdf', onPdfUiTab, splitSideBySide = fal
         <button
           type="button"
           className="breadcrumb__nav-btn"
-          disabled
+          disabled={navBack.length === 0}
+          onClick={() => void goBack()}
           aria-label={t('breadcrumb.back')}
           title={t('breadcrumb.back')}
         >
@@ -86,7 +110,8 @@ export function Breadcrumb({ pdfUiTab = 'pdf', onPdfUiTab, splitSideBySide = fal
         <button
           type="button"
           className="breadcrumb__nav-btn"
-          disabled
+          disabled={navForward.length === 0}
+          onClick={() => void goForward()}
           aria-label={t('breadcrumb.forward')}
           title={t('breadcrumb.forward')}
         >
@@ -95,14 +120,27 @@ export function Breadcrumb({ pdfUiTab = 'pdf', onPdfUiTab, splitSideBySide = fal
       </div>
 
       <nav className="breadcrumb__path">
-        {space && <span className="breadcrumb__path-item">{space.name}</span>}
+        {space && (
+          <button type="button" className="breadcrumb__path-item" onClick={() => void selectSpace(space.id)}>
+            {space.name}
+          </button>
+        )}
         {space && category && <span className="breadcrumb__separator">›</span>}
-        {category && <span className="breadcrumb__path-item">{category.name}</span>}
+        {category && (
+          <button type="button" className="breadcrumb__path-item" onClick={() => void selectCategory(category.id)}>
+            {category.name}
+          </button>
+        )}
         {category && page && <span className="breadcrumb__separator">›</span>}
         {page && (
-          <span className="breadcrumb__path-item is-current" title={page.title}>
+          <button
+            type="button"
+            className="breadcrumb__path-item is-current"
+            title={page.title}
+            onClick={() => void selectPage(page.id)}
+          >
             {page.title}
-          </span>
+          </button>
         )}
       </nav>
 
@@ -147,6 +185,7 @@ export function Breadcrumb({ pdfUiTab = 'pdf', onPdfUiTab, splitSideBySide = fal
             {t('breadcrumb.addPdf')}
           </button>
         )}
+        {pdfFeedback ? <span className="breadcrumb__pdf-feedback">{pdfFeedback}</span> : null}
         {page?.pdfPath && !splitSideBySide && (
           <div className="breadcrumb__pdf-toggle" role="group" aria-label={t('breadcrumb.pdfEditorToggle')}>
             <button

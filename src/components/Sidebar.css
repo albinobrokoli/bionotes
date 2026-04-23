@@ -2,7 +2,7 @@
   width: var(--sidebar-w);
   min-width: var(--sidebar-w);
   height: 100%;
-  background-color: var(--bg-2);
+  background: linear-gradient(180deg, rgba(30, 32, 41, 0.95), rgba(24, 26, 34, 0.94));
   border-right: 0.5px solid var(--bd-1);
   display: flex;
   flex-direction: column;
@@ -26,10 +26,11 @@
   color: var(--tx-1);
   font-weight: 600;
   font-size: var(--fz-md);
-  transition: background-color var(--motion-fast);
+  transition: background-color var(--motion-fast), transform var(--motion-fast);
 }
 .sidebar__workspace:hover {
   background-color: var(--bg-3);
+  transform: translateY(-1px);
 }
 
 .sidebar__workspace-label {
@@ -49,7 +50,7 @@
   padding: 6px 10px 6px 28px;
   font-size: var(--fz-sm);
   color: var(--tx-1);
-  background-color: var(--bg-3);
+  background: rgba(33, 36, 46, 0.86);
   border: 0.5px solid var(--bd-1);
   border-radius: var(--r-md);
   outline: none;
@@ -78,7 +79,7 @@
   transform: translateY(-50%);
   color: var(--tx-4);
   font-size: 10px;
-  background-color: var(--bg-4);
+  background-color: rgba(50, 53, 64, 0.9);
   padding: 1px 5px;
   border-radius: 3px;
   pointer-events: none;
@@ -122,7 +123,7 @@
   gap: 8px;
   padding: 5px 10px;
   margin: 1px 0;
-  border-radius: var(--r-md);
+  border-radius: 10px;
   cursor: pointer;
   color: var(--tx-2);
   font-size: var(--fz-base);
@@ -259,4 +260,9 @@
 
 .sidebar__footer .flex-1 {
   flex: 1;
+}
+
+.sidebar__create-error {
+  font-size: 11px;
+  color: #ff453a;
 }

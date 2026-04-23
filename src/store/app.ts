@@ -98,6 +98,8 @@ interface AppState {
   activeSpaceId: string | null;
   activeCategoryId: string | null;
   activePageId: string | null;
+  navBack: Array<{ spaceId: string | null; categoryId: string | null; pageId: string | null }>;
+  navForward: Array<{ spaceId: string | null; categoryId: string | null; pageId: string | null }>;
 
   /* UI */
   viewMode: ViewMode;
@@ -122,11 +124,13 @@ interface AppState {
   selectSpace: (id: string) => Promise<void>;
   selectCategory: (id: string) => Promise<void>;
   selectPage: (id: string) => Promise<void>;
+  goBack: () => Promise<void>;
+  goForward: () => Promise<void>;
   toggleSpace: (id: string) => Promise<void>;
   toggleCategory: (id: string) => Promise<void>;
 
   /* Actions — pages */
-  createPage: (categoryId: string, title?: string) => Promise<string>;
+  createPage: (categoryId?: string, title?: string) => Promise<string>;
   deletePage: (id: string) => Promise<void>;
   renamePage: (id: string, title: string) => Promise<void>;
   toggleFavorite: (id: string) => Promise<void>;
@@ -177,6 +181,8 @@ export const useApp = create<AppState>()((set, get) => ({
   activeSpaceId: null,
   activeCategoryId: null,
   activePageId: null,
+  navBack: [],
+  navForward: [],
   viewMode: 'edit',
   commandOpen: false,
   graphOpen: false,
@@ -192,15 +198,22 @@ export const useApp = create<AppState>()((set, get) => ({
   onboardedAt: null,
 
   selectSpace: async (id) => {
-    const firstCat = get().categories.find((c) => c.spaceId === id);
+    const state = get();
+    const firstCat = state.categories.find((c) => c.spaceId === id);
     const firstPage = firstCat
-      ? get().pages.find((p) => p.categoryId === firstCat.id)
+      ? state.pages.find((p) => p.categoryId === firstCat.id)
       : undefined;
     const before = snapshotData(get);
+    const current = { spaceId: state.activeSpaceId, categoryId: state.activeCategoryId, pageId: state.activePageId };
+    const next = { spaceId: id, categoryId: firstCat?.id ?? null, pageId: firstPage?.id ?? null };
     set({
-      activeSpaceId: id,
-      activeCategoryId: firstCat?.id ?? null,
-      activePageId: firstPage?.id ?? null,
+      activeSpaceId: next.spaceId,
+      activeCategoryId: next.categoryId,
+      activePageId: next.pageId,
+      navBack: current.pageId !== next.pageId || current.categoryId !== next.categoryId || current.spaceId !== next.spaceId
+        ? [...state.navBack, current]
+        : state.navBack,
+      navForward: [],
     });
     try {
       await repo.setManyPreferences([
@@ -214,11 +227,18 @@ export const useApp = create<AppState>()((set, get) => ({
   },
 
   selectCategory: async (id) => {
-    const firstPage = get().pages.find((p) => p.categoryId === id);
+    const state = get();
+    const firstPage = state.pages.find((p) => p.categoryId === id);
     const before = snapshotData(get);
+    const current = { spaceId: state.activeSpaceId, categoryId: state.activeCategoryId, pageId: state.activePageId };
+    const next = { spaceId: state.activeSpaceId, categoryId: id, pageId: firstPage?.id ?? null };
     set({
-      activeCategoryId: id,
-      activePageId: firstPage?.id ?? null,
+      activeCategoryId: next.categoryId,
+      activePageId: next.pageId,
+      navBack: current.pageId !== next.pageId || current.categoryId !== next.categoryId
+        ? [...state.navBack, current]
+        : state.navBack,
+      navForward: [],
     });
     try {
       await repo.setManyPreferences([
@@ -231,20 +251,73 @@ export const useApp = create<AppState>()((set, get) => ({
   },
 
   selectPage: async (id) => {
-    const page = get().pages.find((p) => p.id === id);
+    const state = get();
+    const page = state.pages.find((p) => p.id === id);
     if (!page) return;
-    const cat = get().categories.find((c) => c.id === page.categoryId);
+    const cat = state.categories.find((c) => c.id === page.categoryId);
     const before = snapshotData(get);
+    const current = { spaceId: state.activeSpaceId, categoryId: state.activeCategoryId, pageId: state.activePageId };
+    const next = { spaceId: cat?.spaceId ?? null, categoryId: cat?.id ?? null, pageId: id };
     set({
-      activePageId: id,
-      activeCategoryId: cat?.id ?? null,
-      activeSpaceId: cat?.spaceId ?? null,
+      activePageId: next.pageId,
+      activeCategoryId: next.categoryId,
+      activeSpaceId: next.spaceId,
+      navBack: current.pageId !== next.pageId ? [...state.navBack, current] : state.navBack,
+      navForward: [],
     });
     try {
       await repo.setManyPreferences([
         [repo.PREF.activeSpaceId, cat?.spaceId ?? ''],
         [repo.PREF.activeCategoryId, cat?.id ?? ''],
         [repo.PREF.activePageId, id],
+      ]);
+    } catch {
+      set(before);
+    }
+  },
+
+  goBack: async () => {
+    const state = get();
+    const last = state.navBack[state.navBack.length - 1];
+    if (!last) return;
+    const current = { spaceId: state.activeSpaceId, categoryId: state.activeCategoryId, pageId: state.activePageId };
+    const before = snapshotData(get);
+    set({
+      activeSpaceId: last.spaceId,
+      activeCategoryId: last.categoryId,
+      activePageId: last.pageId,
+      navBack: state.navBack.slice(0, -1),
+      navForward: [current, ...state.navForward],
+    });
+    try {
+      await repo.setManyPreferences([
+        [repo.PREF.activeSpaceId, last.spaceId ?? ''],
+        [repo.PREF.activeCategoryId, last.categoryId ?? ''],
+        [repo.PREF.activePageId, last.pageId ?? ''],
+      ]);
+    } catch {
+      set(before);
+    }
+  },
+
+  goForward: async () => {
+    const state = get();
+    const [next, ...rest] = state.navForward;
+    if (!next) return;
+    const current = { spaceId: state.activeSpaceId, categoryId: state.activeCategoryId, pageId: state.activePageId };
+    const before = snapshotData(get);
+    set({
+      activeSpaceId: next.spaceId,
+      activeCategoryId: next.categoryId,
+      activePageId: next.pageId,
+      navBack: [...state.navBack, current],
+      navForward: rest,
+    });
+    try {
+      await repo.setManyPreferences([
+        [repo.PREF.activeSpaceId, next.spaceId ?? ''],
+        [repo.PREF.activeCategoryId, next.categoryId ?? ''],
+        [repo.PREF.activePageId, next.pageId ?? ''],
       ]);
     } catch {
       set(before);
@@ -278,11 +351,66 @@ export const useApp = create<AppState>()((set, get) => ({
   },
 
   createPage: async (categoryId, title = 'Yeni sayfa') => {
+    const state = get();
+    let resolvedCategoryId = categoryId ?? state.activeCategoryId ?? null;
+    let resolvedCategory = resolvedCategoryId
+      ? state.categories.find((c) => c.id === resolvedCategoryId) ?? null
+      : null;
+    let spacesPatch = state.spaces;
+    let categoriesPatch = state.categories;
+    let createdSpace: Space | null = null;
+    let createdCategory: Category | null = null;
+    if (!resolvedCategory) {
+      const activeSpaceId = state.activeSpaceId ?? state.spaces[0]?.id ?? null;
+      if (activeSpaceId) {
+        const categoryIdFallback = `cat_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+        createdCategory = {
+          id: categoryIdFallback,
+          spaceId: activeSpaceId,
+          name: 'Genel',
+          pageIds: [],
+          expanded: true,
+        };
+        resolvedCategory = createdCategory;
+        resolvedCategoryId = createdCategory.id;
+        categoriesPatch = [...categoriesPatch, createdCategory];
+        spacesPatch = spacesPatch.map((sp) =>
+          sp.id === activeSpaceId
+            ? { ...sp, categoryIds: [...sp.categoryIds, categoryIdFallback], expanded: true }
+            : sp,
+        );
+      } else {
+        const spaceIdFallback = `sp_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+        const categoryIdFallback = `cat_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+        createdSpace = {
+          id: spaceIdFallback,
+          name: 'Calisma Alani',
+          icon: 'book',
+          color: '#0A84FF',
+          categoryIds: [categoryIdFallback],
+          expanded: true,
+        };
+        createdCategory = {
+          id: categoryIdFallback,
+          spaceId: spaceIdFallback,
+          name: 'Genel',
+          pageIds: [],
+          expanded: true,
+        };
+        resolvedCategory = createdCategory;
+        resolvedCategoryId = createdCategory.id;
+        spacesPatch = [...spacesPatch, createdSpace];
+        categoriesPatch = [...categoriesPatch, createdCategory];
+      }
+    }
+    if (!resolvedCategory || !resolvedCategoryId) {
+      throw new Error('create_page_failed');
+    }
     const newId = `p_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
     const now = Date.now();
     const page: Page = {
       id: newId,
-      categoryId,
+      categoryId: resolvedCategoryId,
       title,
       favorite: false,
       tags: [],
@@ -295,33 +423,47 @@ export const useApp = create<AppState>()((set, get) => ({
       pdfPath: null,
       pdfFileName: null,
     };
-    const cat = get().categories.find((c) => c.id === categoryId);
+    const cat = resolvedCategory;
     const before = snapshotData(get);
-    set((s) => ({
-      pages: [...s.pages, page],
-      categories: s.categories.map((c) =>
-        c.id === categoryId ? { ...c, pageIds: [...c.pageIds, newId], expanded: true } : c,
+    set(() => ({
+      spaces: spacesPatch,
+      categories: categoriesPatch.map((c) =>
+        c.id === resolvedCategoryId ? { ...c, pageIds: [...c.pageIds, newId], expanded: true } : c,
       ),
+      pages: [...state.pages, page],
       activePageId: newId,
-      activeCategoryId: categoryId,
-      activeSpaceId: cat?.spaceId ?? s.activeSpaceId,
+      activeCategoryId: resolvedCategoryId,
+      activeSpaceId: cat?.spaceId ?? state.activeSpaceId,
     }));
     try {
+      if (createdSpace) {
+        await repo.insertSpace(
+          { id: createdSpace.id, name: createdSpace.name, icon: createdSpace.icon, color: createdSpace.color },
+          state.spaces.length,
+        );
+      }
+      if (createdCategory) {
+        await repo.insertCategory(
+          { id: createdCategory.id, spaceId: createdCategory.spaceId, name: createdCategory.name },
+          state.categories.filter((c) => c.spaceId === createdCategory.spaceId).length,
+        );
+      }
       await repo.insertPage(page);
       if (cat) {
         await repo.setManyPreferences([
           [repo.PREF.activeSpaceId, cat.spaceId],
-          [repo.PREF.activeCategoryId, categoryId],
+          [repo.PREF.activeCategoryId, resolvedCategoryId],
           [repo.PREF.activePageId, newId],
         ]);
       } else {
         await repo.setManyPreferences([
-          [repo.PREF.activeCategoryId, categoryId],
+          [repo.PREF.activeCategoryId, resolvedCategoryId],
           [repo.PREF.activePageId, newId],
         ]);
       }
     } catch {
       set(before);
+      throw new Error('create_page_failed');
     }
     return newId;
   },
@@ -416,6 +558,7 @@ export const useApp = create<AppState>()((set, get) => ({
       await repo.updatePage(pageId, { updatedAt: now });
     } catch {
       set(before);
+      throw new Error('attach_pdf_failed');
     }
   },
 

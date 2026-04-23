@@ -57,11 +57,20 @@ export async function ensureSeed(options?: {
       }
     }
   }
+  const syntheticCategoryIds: string[] = [];
+  for (const [idx, s] of syntheticSpaces.entries()) {
+    const cid = `cat_onb_${s.id}`;
+    syntheticCategoryIds.push(cid);
+    await repo.insertCategory({ id: cid, spaceId: s.id, name: 'Genel' }, idx);
+  }
   const selectedCategoryIds = new Set(
     SEED_DATA.categories
       .filter((category) => selectedSeedSpaceIds.has(category.spaceId))
       .map((category) => category.id),
   );
+  for (const cid of syntheticCategoryIds) {
+    selectedCategoryIds.add(cid);
+  }
   for (const p of SEED_DATA.pages) {
     if (!selectedCategoryIds.has(p.categoryId)) continue;
     await repo.insertPage(p);
@@ -76,7 +85,10 @@ export async function ensureSeed(options?: {
     [repo.PREF.expandedSpaces, JSON.stringify(se)],
     [repo.PREF.expandedCategories, JSON.stringify(ce)],
     [repo.PREF.activeSpaceId, spacesToInsert[0]?.id ?? ''],
-    [repo.PREF.activeCategoryId, SEED_DATA.categories.find((c) => selectedSeedSpaceIds.has(c.spaceId))?.id ?? ''],
+    [
+      repo.PREF.activeCategoryId,
+      SEED_DATA.categories.find((c) => selectedSeedSpaceIds.has(c.spaceId))?.id ?? syntheticCategoryIds[0] ?? '',
+    ],
     [repo.PREF.activePageId, SEED_DATA.pages.find((p) => selectedCategoryIds.has(p.categoryId))?.id ?? ''],
     [repo.PREF.accent, 'green'],
     [repo.PREF.fontPair, 'inter-mono'],

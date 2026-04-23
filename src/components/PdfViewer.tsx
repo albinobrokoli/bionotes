@@ -74,6 +74,7 @@ export function PdfViewer({ filePath, displayName, pageId = null }: PdfViewerPro
   const [pageNumber, setPageNumber] = useState(1);
   const [zoomPct, setZoomPct] = useState(100);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [loadProgress, setLoadProgress] = useState<{ loaded: number; total: number } | null>(null);
 
   const [annotations, setAnnotations] = useState<PdfAnnotation[]>([]);
   const [selectionPopup, setSelectionPopup] = useState<SelectionPopupState | null>(null);
@@ -92,6 +93,7 @@ export function PdfViewer({ filePath, displayName, pageId = null }: PdfViewerPro
   const onDocLoad = useCallback(
     ({ numPages: n }: { numPages: number }) => {
       setLoadError(null);
+      setLoadProgress(null);
       setNumPages(n);
       setPageNumber(1);
     },
@@ -357,7 +359,12 @@ export function PdfViewer({ filePath, displayName, pageId = null }: PdfViewerPro
           </div>
         ) : (
           <div className="pdf-viewer__canvas-wrap">
-            <Document file={fileUrl} onLoadSuccess={onDocLoad} onLoadError={onDocError}>
+            <Document
+              file={fileUrl}
+              onLoadSuccess={onDocLoad}
+              onLoadError={onDocError}
+              onLoadProgress={(progress) => setLoadProgress({ loaded: progress.loaded, total: progress.total })}
+            >
               <div ref={pageWrapRef} className="pdf-viewer__page-stack">
                 <Page
                   key={`${pageNumber}-${zoomPct}`}
@@ -391,6 +398,11 @@ export function PdfViewer({ filePath, displayName, pageId = null }: PdfViewerPro
                 ) : null}
               </div>
             </Document>
+            {loadProgress && loadProgress.total > 0 ? (
+              <div className="pdf-viewer__loading">
+                PDF yukleniyor: {Math.min(100, Math.round((loadProgress.loaded / loadProgress.total) * 100))}%
+              </div>
+            ) : null}
           </div>
         )}
       </div>

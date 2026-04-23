@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { useApp } from '../store/app';
@@ -34,6 +34,7 @@ export function Sidebar() {
     openGraph,
     toggleTweaks,
   } = useApp();
+  const [createError, setCreateError] = useState<string | null>(null);
 
   const favorites = useMemo(() => pages.filter((p) => p.favorite), [pages]);
 
@@ -148,14 +149,18 @@ export function Sidebar() {
         <button
           type="button"
           onClick={() => {
+            setCreateError(null);
             const cat =
               categories.find((c) => c.id === activeCategoryId) ?? categories[0];
-            if (cat) void createPage(cat.id, t('editor.untitled'));
+            void createPage(cat?.id, t('editor.untitled')).catch(() => {
+              setCreateError('Sayfa olusturulamadi.');
+            });
           }}
         >
           <Plus size={14} />
           {t('sidebar.newPage')}
         </button>
+        {createError ? <span className="sidebar__create-error">{createError}</span> : null}
         <div className="flex-1" />
         <button type="button" onClick={toggleTweaks} aria-label={t('tweaks.open')} title={t('tweaks.open')}>
           <Settings size={14} />

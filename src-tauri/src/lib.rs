@@ -1,4 +1,3 @@
-use std::fs;
 use std::path::PathBuf;
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -30,7 +29,7 @@ fn pick_pdf(app: tauri::AppHandle) -> Result<Option<String>, String> {
 
 /// PDF'yi uygulama veri dizinine kopyalar; dönen yol veritabanına yazılır.
 #[tauri::command]
-fn copy_to_appdata(app: tauri::AppHandle, src: String) -> Result<String, String> {
+async fn copy_to_appdata(app: tauri::AppHandle, src: String) -> Result<String, String> {
     let src_path = PathBuf::from(&src);
     if !src_path.is_file() {
         return Err("Kaynak dosya bulunamadı.".into());
@@ -40,7 +39,9 @@ fn copy_to_appdata(app: tauri::AppHandle, src: String) -> Result<String, String>
         .app_data_dir()
         .map_err(|e| e.to_string())?;
     let dest_dir = base.join("pdfs");
-    fs::create_dir_all(&dest_dir).map_err(|e| e.to_string())?;
+    tokio::fs::create_dir_all(&dest_dir)
+        .await
+        .map_err(|e| e.to_string())?;
 
     let ext = src_path
         .extension()
@@ -52,7 +53,9 @@ fn copy_to_appdata(app: tauri::AppHandle, src: String) -> Result<String, String>
         .map_err(|e| e.to_string())?
         .as_nanos();
     let dest = dest_dir.join(format!("{stamp}.{ext}"));
-    fs::copy(&src_path, &dest).map_err(|e| e.to_string())?;
+    tokio::fs::copy(&src_path, &dest)
+        .await
+        .map_err(|e| e.to_string())?;
     dest
         .to_str()
         .map(|s| s.to_string())

@@ -7,6 +7,7 @@ import { Breadcrumb } from './components/Breadcrumb';
 import { EditorArea } from './components/EditorArea';
 import { PdfViewer } from './components/PdfViewer';
 import { SplitView } from './components/SplitView';
+import { PreviewPane } from './components/PreviewPane';
 import { useViewportMinWidth } from './hooks/useViewportMinWidth';
 import { CommandPalette } from './components/CommandPalette';
 import { TweaksPanel } from './components/TweaksPanel';
@@ -177,8 +178,17 @@ function App() {
           onPdfUiTab={setPdfUiTab}
           splitSideBySide={viewMode === 'split' && !!activePage?.pdfPath && splitWide}
         />
-        {viewMode === 'split' && activePage?.pdfPath && splitWide ? (
-          <SplitView filePath={activePage.pdfPath} displayName={activePage.pdfFileName ?? 'PDF'} />
+        {viewMode === 'split' ? (
+          activePage?.pdfPath && splitWide ? (
+            <SplitView filePath={activePage.pdfPath} displayName={activePage.pdfFileName ?? 'PDF'} />
+          ) : (
+            <div className="app-main__split-fallback">
+              <EditorArea />
+              <PreviewPane />
+            </div>
+          )
+        ) : viewMode === 'preview' ? (
+          <PreviewPane />
         ) : activePage?.pdfPath && pdfUiTab === 'pdf' ? (
           <PdfViewer filePath={activePage.pdfPath} displayName={activePage.pdfFileName ?? 'PDF'} pageId={activePage.id} />
         ) : (

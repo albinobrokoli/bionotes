@@ -65,7 +65,9 @@ export function CommandPalette({
         label: t('commandPalette.actions.newPage'),
         icon: <Plus size={14} />,
         run: () => {
-          if (fallbackCat) void createPage(fallbackCat, t('editor.untitled'));
+          void createPage(fallbackCat, t('editor.untitled')).catch((err) => {
+            console.error(err);
+          });
           closeCommand();
         },
       },

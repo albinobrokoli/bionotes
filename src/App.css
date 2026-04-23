@@ -48,6 +48,20 @@
   flex-direction: column;
   min-width: 0;
   min-height: 0;
-  background-color: var(--bg-1);
+  background: radial-gradient(circle at top, rgba(44, 49, 63, 0.5), rgba(19, 21, 28, 1) 45%);
   overflow: hidden;
+}
+
+.app-main__split-fallback {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  border-top: 0.5px solid var(--bd-1);
+}
+
+@media (max-width: 960px) {
+  .app-main__split-fallback {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

@@ -246,89 +246,96 @@ export function GraphView({ open, onClose }: Props) {
 
   return createPortal(
     <div className="graph-view__overlay" role="dialog" aria-modal="true">
-      <div className="graph-view__toolbar">
-        <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search pages..."
-          className="graph-view__search"
-        />
-        <select value={spaceFilter} onChange={(e) => setSpaceFilter(e.target.value)} className="graph-view__select">
-          <option value="all">Tüm alanlar</option>
-          {spaces.map((s) => (
-            <option key={s.id} value={s.id}>
-              {s.name}
-            </option>
-          ))}
-        </select>
-        <select value={tagFilter} onChange={(e) => setTagFilter(e.target.value)} className="graph-view__select">
-          <option value="all">Tüm etiketler</option>
-          {allTags.map((tag) => (
-            <option key={tag} value={tag}>
-              {tag}
-            </option>
-          ))}
-        </select>
-        <label className="graph-view__toggle">
+      <div className="graph-view__body">
+        <aside className="graph-view__filters">
+          <h3>Kavram Haritasi</h3>
+          <div className="graph-view__stats">
+            <span>{filteredPages.length} sayfa</span>
+            <span>{visibleEdges.length} baglanti</span>
+          </div>
           <input
-            type="checkbox"
-            checked={favoriteOnly}
-            onChange={(e) => setFavoriteOnly(e.target.checked)}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Sayfa ara..."
+            className="graph-view__search"
           />
-          <span>Sadece favoriler</span>
-        </label>
-        <button type="button" onClick={onClose} className="graph-view__close">
-          Kapat
-        </button>
-      </div>
+          <select value={spaceFilter} onChange={(e) => setSpaceFilter(e.target.value)} className="graph-view__select">
+            <option value="all">Tum alanlar</option>
+            {spaces.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+          <select value={tagFilter} onChange={(e) => setTagFilter(e.target.value)} className="graph-view__select">
+            <option value="all">Tum etiketler</option>
+            {allTags.map((tag) => (
+              <option key={tag} value={tag}>
+                {tag}
+              </option>
+            ))}
+          </select>
+          <label className="graph-view__toggle">
+            <input
+              type="checkbox"
+              checked={favoriteOnly}
+              onChange={(e) => setFavoriteOnly(e.target.checked)}
+            />
+            <span>Sadece favoriler</span>
+          </label>
+          <button type="button" onClick={onClose} className="graph-view__close">
+            Kapat
+          </button>
+        </aside>
 
-      <div className="graph-view__canvas">
-        <ReactFlowProvider>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            fitView
-            fitViewOptions={{ padding: 0.14 }}
-            onNodeClick={(_, node) => setSelectedNodeId(node.id)}
-            onMove={(_, viewport) => setZoom(viewport.zoom)}
-            minZoom={0.18}
-            maxZoom={1.6}
-            defaultEdgeOptions={{
-              markerEnd: { type: MarkerType.ArrowClosed, width: 14, height: 14 },
-            }}
-          >
-            <MiniMap pannable zoomable />
-            <Controls />
-            <Background gap={18} size={1} />
-          </ReactFlow>
-        </ReactFlowProvider>
-      </div>
-
-      <aside className="graph-view__detail">
-        {selectedPage ? (
-          <>
-            <h3>{selectedPage.title}</h3>
-            <div className="graph-view__detail-tags">
-              {selectedPage.tags.length > 0 ? selectedPage.tags.join(', ') : 'Etiket yok'}
-            </div>
-            <p>{firstParagraphExcerpt(selectedPage.content) || 'Önizleme metni yok.'}</p>
-            <button
-              type="button"
-              onClick={() => {
-                void (async () => {
-                  await selectPage(selectedPage.id);
-                  closeGraph();
-                  onClose();
-                })();
+        <div className="graph-view__canvas">
+          <ReactFlowProvider>
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              fitView
+              fitViewOptions={{ padding: 0.14 }}
+              onNodeClick={(_, node) => setSelectedNodeId(node.id)}
+              onMove={(_, viewport) => setZoom(viewport.zoom)}
+              minZoom={0.18}
+              maxZoom={1.6}
+              defaultEdgeOptions={{
+                markerEnd: { type: MarkerType.ArrowClosed, width: 14, height: 14 },
               }}
             >
-              Aç
-            </button>
-          </>
-        ) : (
-          <p className="graph-view__detail-empty">Detay görmek için bir node seçin.</p>
-        )}
-      </aside>
+              <MiniMap pannable zoomable />
+              <Controls />
+              <Background gap={18} size={1} />
+            </ReactFlow>
+          </ReactFlowProvider>
+        </div>
+
+        <aside className="graph-view__detail">
+          {selectedPage ? (
+            <>
+              <h3>{selectedPage.title}</h3>
+              <div className="graph-view__detail-tags">
+                {selectedPage.tags.length > 0 ? selectedPage.tags.join(', ') : 'Etiket yok'}
+              </div>
+              <p>{firstParagraphExcerpt(selectedPage.content) || 'Onizleme metni yok.'}</p>
+              <button
+                type="button"
+                onClick={() => {
+                  void (async () => {
+                    await selectPage(selectedPage.id);
+                    closeGraph();
+                    onClose();
+                  })();
+                }}
+              >
+                Notu ac
+              </button>
+            </>
+          ) : (
+            <p className="graph-view__detail-empty">Detay gormek icin bir dugum secin.</p>
+          )}
+        </aside>
+      </div>
     </div>,
     document.body,
   );

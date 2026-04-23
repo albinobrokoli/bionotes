@@ -1,0 +1,25 @@
+.preview-pane {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: var(--bg-1);
+}
+
+.preview-pane__inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 26px 72px;
+}
+
+.preview-pane__line {
+  margin: 0 0 12px;
+  color: var(--tx-2);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.preview-pane__empty {
+  margin: 0;
+  color: var(--tx-4);
+  font-size: 13px;
+}
