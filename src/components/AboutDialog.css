@@ -1,0 +1,48 @@
+.about-dialog__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(5, 6, 10, 0.62);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.about-dialog {
+  width: min(420px, 100%);
+  background: var(--bg-2);
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  box-shadow: var(--shadow-2);
+}
+
+.about-dialog__header {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line-2);
+}
+
+.about-dialog__header h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.about-dialog__body {
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+  color: var(--tx-2);
+}
+
+.about-dialog__body p {
+  margin: 0;
+}
+
+.about-dialog__name {
+  color: var(--tx-1);
+  font-size: 18px;
+  font-weight: 600;
+}

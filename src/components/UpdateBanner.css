@@ -1,0 +1,26 @@
+.update-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--accent-line);
+  background: color-mix(in srgb, var(--accent-soft) 58%, var(--bg-1));
+  color: var(--tx-2);
+  font-size: 13px;
+}
+
+.update-banner button {
+  margin-left: 8px;
+  border: 0.5px solid var(--accent-line);
+  border-radius: 8px;
+  padding: 4px 10px;
+  color: var(--tx-1);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.update-banner__error {
+  color: #ff8181;
+  font-size: 12px;
+}

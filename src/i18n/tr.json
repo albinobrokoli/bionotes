@@ -1,0 +1,219 @@
+{
+  "app": {
+    "name": "BioNotes",
+    "tagline": "Fen bilimleri için açık kaynak not defteri"
+  },
+  "sidebar": {
+    "searchPlaceholder": "Ara veya ⌘K",
+    "inbox": "Gelen Kutusu",
+    "today": "Bugün",
+    "favorites": "Favoriler",
+    "drafts": "Taslaklar",
+    "tags": "Etiketler",
+    "graph": "Kavram Haritası",
+    "spaces": "Alanlar",
+    "newPage": "Yeni sayfa",
+    "newSpace": "Yeni alan",
+    "emptySpaces": "Hiç alan yok",
+    "collapse": "Daralt",
+    "expand": "Genişlet"
+  },
+  "breadcrumb": {
+    "back": "Geri",
+    "forward": "İleri",
+    "edit": "Düzenle",
+    "preview": "Önizle",
+    "split": "Bölünmüş",
+    "more": "Daha fazla",
+    "addPdf": "PDF ekle",
+    "viewPdf": "PDF",
+    "viewEditor": "Editör",
+    "pdfEditorToggle": "PDF veya editör görünümü"
+  },
+  "pdfViewer": {
+    "title": "PDF görüntüleyici",
+    "pageOf": "Sayfa {{current}} / {{total}}",
+    "prev": "Önceki sayfa",
+    "next": "Sonraki sayfa",
+    "zoomIn": "Yakınlaştır",
+    "zoomOut": "Uzaklaştır",
+    "loadError": "PDF yüklenemedi.",
+    "highlight": {
+      "title": "Vurgula",
+      "addAsNote": "Not olarak ekle",
+      "delete": "Sil",
+      "yellow": "Sarı vurgu",
+      "green": "Yeşil vurgu",
+      "red": "Kırmızı vurgu"
+    }
+  },
+  "editor": {
+    "placeholder": "Yazmaya başla veya / ile blok ekle...",
+    "untitled": "Adsız",
+    "emptyState": {
+      "title": "Bir sayfa seç",
+      "body": "Kenar çubuğundan bir not seç ya da ⌘K ile hızlıca ara."
+    },
+    "saveSaving": "Kaydediliyor...",
+    "saveFailed": "Kaydedilemedi",
+    "savedJustNow": "Az önce kaydedildi",
+    "savedSecondsAgo": "{{count}} saniye önce",
+    "scienceBlocks": {
+      "hypothesis": {
+        "title": "Hipotez",
+        "placeholder": "Hipotezi yaz..."
+      },
+      "conclusion": {
+        "title": "Sonuç",
+        "placeholder": "Sonucu yaz..."
+      },
+      "status": {
+        "proposed": "Önerildi / Proposed",
+        "testing": "Test ediliyor / Testing",
+        "supported": "Destekleniyor / Supported",
+        "rejected": "Reddedildi / Rejected"
+      },
+      "confidence": {
+        "low": "Düşük güven",
+        "medium": "Orta güven",
+        "high": "Yüksek güven"
+      }
+    }
+  },
+  "commandPalette": {
+    "placeholder": "Bir komut ara ya da sayfa aç...",
+    "empty": "Sonuç bulunamadı.",
+    "sections": {
+      "actions": "Eylemler",
+      "pages": "Sayfalar",
+      "navigation": "Gezinme"
+    },
+    "actions": {
+      "newPage": "Yeni sayfa oluştur",
+      "newSpace": "Yeni alan oluştur",
+      "importNotion": "Notion'dan içe aktar",
+      "openPdf": "PDF aç",
+      "openGraph": "Kavram haritasını aç",
+      "generateBibliography": "Bibliyografi oluştur",
+      "sendToNotebookLm": "NotebookLM'e gönder",
+      "toggleTweaks": "Tercihler panelini aç",
+      "toggleRightRail": "Sağ paneli aç/kapat",
+      "showOnboardingAgain": "Onboarding'i tekrar göster",
+      "about": "Hakkında"
+    }
+  },
+  "onboarding": {
+    "title": "BioNotes'a hoş geldin",
+    "subtitle": "Kurulumu 1 dakikada tamamlayalım, sonra notlara dalarız.",
+    "progress": "Onboarding adım ilerlemesi",
+    "skip": "Geç",
+    "start": "Başla",
+    "prev": "Önceki",
+    "next": "Sonraki",
+    "finish": "Bitir",
+    "steps": {
+      "welcome": {
+        "title": "Bilim odaklı bir not alanına hazırsın",
+        "body": "BioNotes, araştırma ritmine uyum sağlayan sade ama güçlü bir çalışma alanı sunar.",
+        "bullets": {
+          "localFirst": "Local-first: Notların cihazında, hızlı ve çevrimdışı erişilebilir.",
+          "science": "Bilim odaklı: Wiki link, PDF ve araştırma akışları için tasarlandı.",
+          "free": "Tamamen ücretsiz: Merak ettiğin kadar dene, sınır yok."
+        }
+      },
+      "preferences": {
+        "title": "Kendi tarzını seç",
+        "body": "Dili ve vurgu rengini şimdi ayarla, istersen sonra tekrar değiştirirsin.",
+        "language": "Dil",
+        "accent": "Vurgu rengi"
+      },
+      "areas": {
+        "title": "Hangi alanda çalışıyorsun?",
+        "body": "Seçtiğin alanlar başlangıçta Space olarak gelir. Seçmediklerin görünmez."
+      },
+      "shortcuts": {
+        "title": "Hızlı başlangıç kısayolları",
+        "body": "Bu üç kısayol ritmi ciddi hızlandırır, özellikle günlük not akışında.",
+        "command": "Command Palette'i aç",
+        "slash": "Editörde blok menüsünü aç",
+        "wikilink": "Sayfalar arasında wiki link oluştur"
+      }
+    }
+  },
+  "tweaks": {
+    "title": "Tercihler",
+    "accent": "Vurgu rengi",
+    "font": "Yazı tipi",
+    "language": "Dil",
+    "citationFormat": "Varsayılan citation formatı",
+    "autoUpdates": "Otomatik güncellemeler",
+    "on": "Açık",
+    "off": "Kapalı",
+    "fonts": {
+      "inter-mono": "Inter + Mono",
+      "system": "Sistem (SF)",
+      "humanist": "Humanist (Newsreader)"
+    },
+    "close": "Kapat",
+    "open": "Tercihler"
+  },
+  "rightRail": {
+    "title": "Ayrıntılar",
+    "metadata": "Meta veri",
+    "sources": "Kaynaklar",
+    "tags": "Etiketler",
+    "backlinks": "Geri bağlantılar",
+    "empty": "Bu sayfa için henüz veri yok.",
+    "hide": "Sağ paneli gizle"
+  },
+  "sources": {
+    "addSource": "Kaynak ekle",
+    "resolveDoi": "DOI'den çöz",
+    "authors": "Yazarlar",
+    "journal": "Dergi",
+    "year": "Yıl",
+    "saveFailed": "Kaynak kaydedilemedi.",
+    "resolveFailed": "DOI çözümlenemedi."
+  },
+  "bibliography": {
+    "title": "Bibliyografi oluştur",
+    "format": "Format",
+    "scope": "Kapsam",
+    "scopes": {
+      "page": "Aktif sayfa",
+      "space": "Aktif space",
+      "workspace": "Tüm workspace"
+    },
+    "copy": "Clipboard'a kopyala",
+    "downloadBibtex": "BibTeX olarak indir",
+    "loading": "Kaynaklar yükleniyor...",
+    "empty": "Bu kapsam için kaynak bulunamadı.",
+    "copied": "Bibliyografi clipboard'a kopyalandı.",
+    "copyFailed": "Clipboard'a kopyalanamadı.",
+    "downloaded": "BibTeX dosyası indirildi.",
+    "downloadFailed": "BibTeX indirilemedi."
+  },
+  "notebooklm": {
+    "title": "NotebookLM'e gönder",
+    "scope": "Kapsam",
+    "description": "NotebookLM otomatik yükleme desteklemez. ZIP indirildi. NotebookLM açıldığında 'Kaynak ekle' → ZIP içeriklerini sürükleyin.",
+    "scopes": {
+      "page": "Aktif sayfa",
+      "category": "Aktif kategori",
+      "space": "Aktif alan"
+    },
+    "downloadZip": "ZIP'i indir",
+    "openNotebookLm": "NotebookLM'de aç",
+    "exporting": "Dışa aktarılıyor...",
+    "downloadDone": "ZIP indirildi. NotebookLM açıldığında 'Kaynak ekle' → ZIP içeriklerini sürükleyin.",
+    "exportFailed": "Dışa aktarma başarısız oldu.",
+    "openFailed": "NotebookLM açılamadı."
+  },
+  "accents": {
+    "green": "Yeşil",
+    "blue": "Mavi",
+    "purple": "Mor",
+    "amber": "Turuncu",
+    "pink": "Pembe"
+  }
+}

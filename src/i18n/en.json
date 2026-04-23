@@ -1,0 +1,219 @@
+{
+  "app": {
+    "name": "BioNotes",
+    "tagline": "Open-source note-taking for science"
+  },
+  "sidebar": {
+    "searchPlaceholder": "Search or ⌘K",
+    "inbox": "Inbox",
+    "today": "Today",
+    "favorites": "Favorites",
+    "drafts": "Drafts",
+    "tags": "Tags",
+    "graph": "Concept map",
+    "spaces": "Spaces",
+    "newPage": "New page",
+    "newSpace": "New space",
+    "emptySpaces": "No spaces yet",
+    "collapse": "Collapse",
+    "expand": "Expand"
+  },
+  "breadcrumb": {
+    "back": "Back",
+    "forward": "Forward",
+    "edit": "Edit",
+    "preview": "Preview",
+    "split": "Split",
+    "more": "More",
+    "addPdf": "Add PDF",
+    "viewPdf": "PDF",
+    "viewEditor": "Editor",
+    "pdfEditorToggle": "PDF or editor view"
+  },
+  "pdfViewer": {
+    "title": "PDF viewer",
+    "pageOf": "Page {{current}} / {{total}}",
+    "prev": "Previous page",
+    "next": "Next page",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "loadError": "Could not load PDF.",
+    "highlight": {
+      "title": "Highlight",
+      "addAsNote": "Add as note",
+      "delete": "Delete",
+      "yellow": "Yellow highlight",
+      "green": "Green highlight",
+      "red": "Red highlight"
+    }
+  },
+  "editor": {
+    "placeholder": "Start writing or press / for blocks...",
+    "untitled": "Untitled",
+    "emptyState": {
+      "title": "Select a page",
+      "body": "Pick a note from the sidebar or search with ⌘K."
+    },
+    "saveSaving": "Saving...",
+    "saveFailed": "Save failed",
+    "savedJustNow": "Saved just now",
+    "savedSecondsAgo": "{{count}} seconds ago",
+    "scienceBlocks": {
+      "hypothesis": {
+        "title": "Hypothesis",
+        "placeholder": "Write the hypothesis..."
+      },
+      "conclusion": {
+        "title": "Conclusion",
+        "placeholder": "Write the conclusion..."
+      },
+      "status": {
+        "proposed": "Önerildi / Proposed",
+        "testing": "Test ediliyor / Testing",
+        "supported": "Destekleniyor / Supported",
+        "rejected": "Reddedildi / Rejected"
+      },
+      "confidence": {
+        "low": "Low confidence",
+        "medium": "Medium confidence",
+        "high": "High confidence"
+      }
+    }
+  },
+  "commandPalette": {
+    "placeholder": "Search a command or jump to a page...",
+    "empty": "No results.",
+    "sections": {
+      "actions": "Actions",
+      "pages": "Pages",
+      "navigation": "Navigation"
+    },
+    "actions": {
+      "newPage": "Create new page",
+      "newSpace": "Create new space",
+      "importNotion": "Import Notion export",
+      "openPdf": "Open PDF",
+      "openGraph": "Open graph view",
+      "generateBibliography": "Generate bibliography",
+      "sendToNotebookLm": "Send to NotebookLM",
+      "toggleTweaks": "Open tweaks panel",
+      "toggleRightRail": "Toggle right panel",
+      "showOnboardingAgain": "Show onboarding again",
+      "about": "About"
+    }
+  },
+  "onboarding": {
+    "title": "Welcome to BioNotes",
+    "subtitle": "Let's finish setup in a minute, then jump into your notes.",
+    "progress": "Onboarding step progress",
+    "skip": "Skip",
+    "start": "Start",
+    "prev": "Previous",
+    "next": "Next",
+    "finish": "Finish",
+    "steps": {
+      "welcome": {
+        "title": "Your science notebook is ready",
+        "body": "BioNotes gives you a focused workspace that fits real research workflows.",
+        "bullets": {
+          "localFirst": "Local-first: Your notes stay on your device, fast and offline-ready.",
+          "science": "Science-focused: Built for wiki links, PDFs, and research thinking.",
+          "free": "Completely free: Explore as much as you want with no limits."
+        }
+      },
+      "preferences": {
+        "title": "Pick your setup vibe",
+        "body": "Choose language and accent color now, you can always change them later.",
+        "language": "Language",
+        "accent": "Accent color"
+      },
+      "areas": {
+        "title": "What field do you work in?",
+        "body": "Selected fields are created as default spaces. Unselected fields stay hidden."
+      },
+      "shortcuts": {
+        "title": "Quick shortcut recap",
+        "body": "These three shortcuts make daily note-taking much faster.",
+        "command": "Open command palette",
+        "slash": "Open block menu in editor",
+        "wikilink": "Create wiki links between pages"
+      }
+    }
+  },
+  "tweaks": {
+    "title": "Tweaks",
+    "accent": "Accent color",
+    "font": "Typography",
+    "language": "Language",
+    "citationFormat": "Default citation format",
+    "autoUpdates": "Automatic updates",
+    "on": "On",
+    "off": "Off",
+    "fonts": {
+      "inter-mono": "Inter + Mono",
+      "system": "System (SF)",
+      "humanist": "Humanist (Newsreader)"
+    },
+    "close": "Close",
+    "open": "Tweaks"
+  },
+  "rightRail": {
+    "title": "Details",
+    "metadata": "Metadata",
+    "sources": "Sources",
+    "tags": "Tags",
+    "backlinks": "Backlinks",
+    "empty": "No metadata for this page yet.",
+    "hide": "Hide right panel"
+  },
+  "sources": {
+    "addSource": "Add source",
+    "resolveDoi": "Resolve from DOI",
+    "authors": "Authors",
+    "journal": "Journal",
+    "year": "Year",
+    "saveFailed": "Could not save source.",
+    "resolveFailed": "DOI could not be resolved."
+  },
+  "bibliography": {
+    "title": "Generate bibliography",
+    "format": "Format",
+    "scope": "Scope",
+    "scopes": {
+      "page": "Active page",
+      "space": "Active space",
+      "workspace": "Whole workspace"
+    },
+    "copy": "Copy to clipboard",
+    "downloadBibtex": "Download as BibTeX",
+    "loading": "Loading sources...",
+    "empty": "No sources found for this scope.",
+    "copied": "Bibliography copied to clipboard.",
+    "copyFailed": "Could not copy bibliography.",
+    "downloaded": "BibTeX file downloaded.",
+    "downloadFailed": "Could not download BibTeX."
+  },
+  "notebooklm": {
+    "title": "Send to NotebookLM",
+    "scope": "Scope",
+    "description": "NotebookLM does not support automatic upload. ZIP downloaded. When NotebookLM opens, click 'Add source' and drag the ZIP contents.",
+    "scopes": {
+      "page": "Active page",
+      "category": "Active category",
+      "space": "Active space"
+    },
+    "downloadZip": "Download ZIP",
+    "openNotebookLm": "Open in NotebookLM",
+    "exporting": "Exporting...",
+    "downloadDone": "ZIP downloaded. When NotebookLM opens, click 'Add source' and drag the ZIP contents.",
+    "exportFailed": "Export failed.",
+    "openFailed": "Could not open NotebookLM."
+  },
+  "accents": {
+    "green": "Green",
+    "blue": "Blue",
+    "purple": "Purple",
+    "amber": "Amber",
+    "pink": "Pink"
+  }
+}

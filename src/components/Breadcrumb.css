@@ -1,0 +1,181 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  height: var(--topbar-h);
+  padding: 0 var(--sp-4);
+  border-bottom: 0.5px solid var(--bd-1);
+  background-color: var(--bg-1);
+  position: relative;
+  z-index: 2;
+  user-select: none;
+}
+
+.breadcrumb__nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.breadcrumb__nav-btn {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-md);
+  color: var(--tx-3);
+  transition: background-color var(--motion-fast), color var(--motion-fast);
+}
+.breadcrumb__nav-btn:hover {
+  background-color: var(--bg-3);
+  color: var(--tx-1);
+}
+.breadcrumb__nav-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.breadcrumb__nav-btn:disabled:hover {
+  background-color: transparent;
+  color: var(--tx-3);
+}
+
+.breadcrumb__path {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  overflow: hidden;
+  font-size: var(--fz-sm);
+  color: var(--tx-3);
+  letter-spacing: var(--ls-tight);
+}
+
+.breadcrumb__path-item {
+  color: var(--tx-3);
+  white-space: nowrap;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 3px;
+  padding: 2px 4px;
+  transition: background-color var(--motion-fast), color var(--motion-fast);
+}
+.breadcrumb__path-item:hover {
+  color: var(--tx-1);
+  background-color: var(--bg-3);
+}
+
+.breadcrumb__path-item.is-current {
+  color: var(--tx-1);
+  font-weight: 500;
+}
+
+.breadcrumb__separator {
+  color: var(--tx-4);
+  font-size: 11px;
+}
+
+.breadcrumb__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.breadcrumb__pdf-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--tx-2);
+  border-radius: var(--r-md);
+  border: 0.5px solid var(--bd-1);
+  background: var(--bg-3);
+  transition: background-color var(--motion-fast), color var(--motion-fast), opacity var(--motion-fast);
+  white-space: nowrap;
+}
+.breadcrumb__pdf-add:hover:not(:disabled) {
+  color: var(--tx-1);
+  background: var(--bg-4);
+}
+.breadcrumb__pdf-add:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.breadcrumb__pdf-toggle {
+  display: inline-flex;
+  background-color: var(--bg-3);
+  border-radius: var(--r-md);
+  padding: 2px;
+  border: 0.5px solid var(--bd-1);
+}
+.breadcrumb__pdf-toggle button {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--tx-3);
+  border-radius: 4px;
+  transition: background-color var(--motion-fast), color var(--motion-fast);
+}
+.breadcrumb__pdf-toggle button:hover {
+  color: var(--tx-1);
+}
+.breadcrumb__pdf-toggle button.is-active {
+  background-color: var(--bg-4);
+  color: var(--tx-1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.breadcrumb__mode {
+  display: inline-flex;
+  background-color: var(--bg-3);
+  border-radius: var(--r-md);
+  padding: 2px;
+}
+
+.breadcrumb__mode button {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--tx-3);
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color var(--motion-fast), color var(--motion-fast);
+}
+.breadcrumb__mode button:hover {
+  color: var(--tx-1);
+}
+.breadcrumb__mode button.is-active {
+  background-color: var(--bg-4);
+  color: var(--tx-1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.breadcrumb__save {
+  font-size: 11px;
+  color: var(--tx-4);
+  margin-right: var(--sp-2);
+  font-family: var(--ff-mono);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.breadcrumb__save.is-error {
+  color: #ff453a;
+}
+
+.breadcrumb__save-spinner {
+  animation: breadcrumb-spin 0.7s linear infinite;
+}
+
+@keyframes breadcrumb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,108 @@
+.export-dialog__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(5, 6, 10, 0.62);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.export-dialog {
+  width: min(560px, 100%);
+  background: var(--bg-2);
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  box-shadow: var(--shadow-2);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.export-dialog__header,
+.export-dialog__footer {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid var(--line-2);
+}
+
+.export-dialog__footer {
+  border-bottom: none;
+  border-top: 1px solid var(--line-2);
+  justify-content: flex-end;
+}
+
+.export-dialog__header h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.export-dialog__body {
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+}
+
+.export-dialog__desc {
+  margin: 0;
+  color: var(--tx-3);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.export-dialog__group {
+  display: grid;
+  gap: 8px;
+}
+
+.export-dialog__label {
+  color: var(--tx-3);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.export-dialog__radios {
+  display: grid;
+  gap: 8px;
+}
+
+.export-dialog__radios label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--tx-2);
+  font-size: 13px;
+}
+
+.export-dialog__status {
+  color: var(--tx-2);
+  font-size: 13px;
+}
+
+.export-dialog__error {
+  color: #f87171;
+  font-size: 13px;
+}
+
+.export-dialog__progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.export-dialog__progress progress {
+  width: 100%;
+  height: 10px;
+}
+
+.export-dialog__progress span {
+  color: var(--tx-3);
+  font-size: 12px;
+  min-width: 62px;
+  text-align: right;
+}

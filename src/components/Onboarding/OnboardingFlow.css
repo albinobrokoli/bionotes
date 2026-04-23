@@ -1,0 +1,236 @@
+.onb__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(48, 209, 88, 0.17), transparent 45%),
+    radial-gradient(circle at 78% 84%, rgba(10, 132, 255, 0.14), transparent 44%),
+    rgba(3, 3, 6, 0.95);
+}
+
+.onb__card {
+  position: relative;
+  width: 640px;
+  max-width: min(640px, calc(100vw - 48px));
+  max-height: min(760px, calc(100vh - 48px));
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.62);
+  overflow: hidden;
+}
+
+.onb__skip {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--tx-3);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.onb__header {
+  padding: 28px 28px 18px;
+}
+
+.onb__header h1 {
+  margin: 0;
+  color: var(--tx-1);
+  font-size: 26px;
+}
+
+.onb__header p {
+  margin: 8px 0 0;
+  color: var(--tx-3);
+  font-size: 14px;
+}
+
+.onb__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 28px 20px;
+}
+
+.onb__step h2 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--tx-1);
+}
+
+.onb__step p {
+  margin: 10px 0 0;
+  color: var(--tx-3);
+  line-height: 1.5;
+}
+
+.onb__step ul {
+  margin: 16px 0 0;
+  padding-left: 18px;
+  color: var(--tx-2);
+  display: grid;
+  gap: 8px;
+}
+
+.onb__group {
+  margin-top: 20px;
+}
+
+.onb__group-title {
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: var(--tx-4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.onb__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.onb__chip {
+  border: 1px solid var(--bd-2);
+  background: var(--bg-3);
+  color: var(--tx-2);
+  font-size: 13px;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.onb__chip.is-active {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+  color: var(--tx-1);
+}
+
+.onb__swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background: var(--swatch-color);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
+.onb__swatch.is-active {
+  border-color: #fff;
+}
+
+.onb__check-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.onb__check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--tx-2);
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--bd-1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.onb__check-item input {
+  accent-color: var(--accent);
+}
+
+.onb__shortcut-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.onb__shortcut-list > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--tx-2);
+}
+
+.onb__shortcut-list kbd {
+  min-width: 44px;
+  text-align: center;
+  border: 1px solid var(--bd-2);
+  border-bottom-color: var(--bd-3);
+  border-radius: 8px;
+  background: var(--bg-3);
+  color: var(--tx-1);
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  padding: 6px 8px;
+}
+
+.onb__footer {
+  border-top: 1px solid var(--bd-1);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.onb__dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.onb__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg-4);
+}
+
+.onb__dot.is-active {
+  background: var(--accent);
+}
+
+.onb__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.onb__btn {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 13px;
+  padding: 9px 14px;
+  cursor: pointer;
+}
+
+.onb__btn--ghost {
+  background: transparent;
+  color: var(--tx-3);
+  border-color: var(--bd-2);
+}
+
+.onb__btn--primary {
+  background: var(--accent);
+  color: #07120a;
+  font-weight: 600;
+}
+
+.onb__btn:disabled,
+.onb__skip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

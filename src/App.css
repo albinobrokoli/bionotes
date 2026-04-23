@@ -1,0 +1,53 @@
+.app-splash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-0);
+  color: var(--tx-2);
+}
+
+.app-splash--error {
+  padding: 2rem;
+  text-align: center;
+  color: var(--tx-1);
+}
+
+.app-splash__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.app-splash__logo {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--tx-1);
+}
+
+.app-splash__msg {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--tx-4);
+}
+
+.app-shell {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-0);
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background-color: var(--bg-1);
+  overflow: hidden;
+}

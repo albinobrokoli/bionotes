@@ -1,0 +1,107 @@
+/* BioNotes — Design Tokens
+ * Ported 1:1 from the HTML mockup (Apple macOS system palette, dark mode).
+ */
+
+:root {
+  /* Backgrounds (layered depth) */
+  --bg-0: #0E0E10;          /* wallpaper */
+  --bg-1: #1C1C1E;          /* window base */
+  --bg-2: #232326;          /* sidebar */
+  --bg-3: #2C2C2E;          /* cards, inactive */
+  --bg-4: #3A3A3C;          /* hover */
+
+  /* Borders */
+  --bd-1: #2A2A2D;          /* subtle dividers */
+  --bd-2: #48484A;          /* medium dividers */
+  --bd-3: #636366;          /* strong dividers */
+
+  /* Text */
+  --tx-1: #FFFFFF;
+  --tx-2: rgba(235, 235, 245, 0.80);
+  --tx-3: rgba(235, 235, 245, 0.55);
+  --tx-4: rgba(235, 235, 245, 0.35);
+
+  /* Accent (default: Apple System Green) */
+  --accent: #30D158;
+  --accent-soft: rgba(48, 209, 88, 0.14);
+  --accent-line: rgba(48, 209, 88, 0.45);
+
+  /* Status */
+  --danger: #FF453A;
+  --warn: #FF9F0A;
+  --info: #0A84FF;
+
+  /* Highlights */
+  --hl-y: rgba(255, 214, 10, 0.35);
+  --hl-g: rgba(48, 209, 88, 0.32);
+  --hl-r: rgba(255, 69, 58, 0.30);
+
+  /* Radii */
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 8px;
+  --r-xl: 12px;
+  --r-2xl: 18px;
+  --r-window: 10px;
+
+  /* Shadows */
+  --sh-window: 0 20px 60px rgba(0, 0, 0, 0.55);
+  --sh-card: 0 1px 4px rgba(0, 0, 0, 0.12);
+  --sh-focus: 0 0 0 2px var(--accent);
+
+  /* Typography */
+  --ff-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+  --ff-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, Monaco, monospace;
+  --ff-serif: 'Newsreader', ui-serif, Georgia, serif;
+
+  --fz-xs: 10px;
+  --fz-sm: 12px;
+  --fz-base: 13px;
+  --fz-md: 14px;
+  --fz-lg: 15px;
+  --fz-xl: 16px;
+  --fz-2xl: 18px;
+  --fz-3xl: 22px;
+
+  --lh-tight: 1.25;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.7;
+
+  --ls-tight: -0.01em;
+  --ls-normal: 0;
+  --ls-wide: 0.14em;
+
+  /* Layout */
+  --sidebar-w: 240px;
+  --rail-w: 300px;
+  --topbar-h: 46px;
+  --titlebar-h: 28px;     /* macOS traffic-lights alanı */
+
+  /* Density (1 = default, <1 = compact) */
+  --density: 1;
+  --sp-1: calc(4px * var(--density));
+  --sp-2: calc(8px * var(--density));
+  --sp-3: calc(12px * var(--density));
+  --sp-4: calc(16px * var(--density));
+  --sp-5: calc(20px * var(--density));
+  --sp-6: calc(24px * var(--density));
+
+  /* Motion */
+  --motion-fast: 120ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-base: 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-slow: 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Font pair: system */
+[data-font='system'] {
+  --ff-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+  --ff-mono: 'SF Mono', ui-monospace, Menlo, Monaco, monospace;
+  --ff-serif: ui-serif, Georgia, 'Times New Roman', serif;
+}
+
+/* Font pair: humanist (warmer) */
+[data-font='humanist'] {
+  --ff-sans: 'Newsreader', ui-serif, Georgia, serif;
+  --ff-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --ff-serif: 'Newsreader', ui-serif, Georgia, serif;
+}
